@@ -3,7 +3,7 @@ GO_OUT_DIR=gen/go
 PY_OUT_DIR=client/gen
 PROTO_FILE=$(PROTO_DIR)/fifo/v1/fifo.proto
 
-.PHONY: all go python clean
+.PHONY: all go python clean build run-server run-client
 
 all: go python
 
@@ -35,3 +35,15 @@ clean:
 	rm -rf $(PY_OUT_DIR)
 	rm -rf bin/
 	rm -rf venv/
+
+build:
+	@echo "Building Go server..."
+	go build -o bin/server cmd/server/main.go
+
+run-server: build
+	@echo "Running Go server..."
+	./bin/server
+
+run-client:
+	@echo "Running Python client..."
+	python3 client/client.py
