@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package fifo.v1;
+
+option go_package = "github.com/tanovicm/fifo-buffer/gen/go/fifo/v1;fifov1";
+
+// Request messages
+message PushRequest {
+  string element = 1;
+}
+
+message PullRequest {
+  // Empty - no parameters needed
+}
+
+message SizeRequest {
+  // Empty - no parameters needed
+}
+
+// Response messages
+message PushResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message PullResponse {
+  bool success = 1;
+  string element = 2;
+  string message = 3;
+}
+
+message SizeResponse {
+  int32 size = 1;
+}
+
+// Service request wrapper
+message Request {
+  oneof request {
+    PushRequest push = 1;
+    PullRequest pull = 2;
+    SizeRequest size = 3;
+  }
+}
+
+// Service response wrapper
+message Response {
+  oneof response {
+    PushResponse push = 1;
+    PullResponse pull = 2;
+    SizeResponse size = 3;
+  }
+}
